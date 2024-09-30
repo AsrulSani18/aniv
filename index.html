@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Halaman Anniversary Kami</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: #fff5f5;
+            color: #4a4a4a;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+        h1, h2 {
+            font-family: 'Playfair Display', serif;
+            color: #d23669;
+        }
+        nav {
+            background-color: rgba(210, 54, 105, 0.8);
+            padding: 15px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+        nav a:hover {
+            color: #ffe6e6;
+        }
+        #content {
+            max-width: 800px;
+            margin: 80px auto 40px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+        .gallery img {
+            border-radius: 10px;
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        .gallery img:hover {
+            transform: scale(1.05);
+        }
+        .content-animation {
+            animation: fadeIn 0.5s;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        #musicControls {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: rgba(210, 54, 105, 0.8);
+            padding: 10px;
+            border-radius: 25px;
+            color: white;
+            z-index: 1000;
+        }
+        #musicToggle {
+            background-color: transparent;
+            border: 2px solid white;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        #musicToggle:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        #nowPlaying {
+            margin-left: 10px;
+            font-style: italic;
+        }
+        .quote {
+            font-style: italic;
+            text-align: center;
+            margin: 20px 0;
+            color: #d23669;
+        }
+        .heart {
+            color: #d23669;
+            font-size: 1.2em;
+        }
+        .floating-heart {
+            position: fixed;
+            color: rgba(210, 54, 105, 0.7);
+            font-size: 20px;
+            user-select: none;
+            cursor: default;
+            z-index: 999;
+        }
+        @keyframes float-heart {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="#" data-page="home">Beranda</a>
+        <a href="#" data-page="image">Galeri</a>
+        <a href="#" data-page="tentang">Tentang</a>
+    </nav>
+    <div id="content"></div>
+    <div id="musicControls">
+        <button id="musicToggle">Putar Musik</button>
+        <span id="nowPlaying"></span>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const content = document.getElementById("content");
+            const navLinks = document.querySelectorAll("nav a");
+            const audioPlayer = new Audio('musik.mp3');
+            audioPlayer.loop = true;
+
+            const musicToggle = document.getElementById('musicToggle');
+            const nowPlaying = document.getElementById('nowPlaying');
+            
+            nowPlaying.textContent = 'musik.mp3';
+
+            musicToggle.addEventListener('click', () => {
+                if (audioPlayer.paused) {
+                    audioPlayer.play();
+                    musicToggle.textContent = "Jeda Musik";
+                } else {
+                    audioPlayer.pause();
+                    musicToggle.textContent = "Putar Musik";
+                }
+            });
+
+            function loadContent(page) {
+                content.style.opacity = 0;
+
+                setTimeout(() => {
+                    content.innerHTML = "";
+                    const newContent = document.createElement("div");
+                    newContent.classList.add("content-animation");
+
+                    switch (page) {
+                        case "home":
+                            newContent.innerHTML = `
+                                <h1>Selamat Datang di Halaman Anniversary Kami</h1>
+                                <img src="image/7.jpg" alt="Gambar Anniversary" style="display: block; margin: 20px auto; max-width: 100%; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+                                <p class="quote">"Setiap hari bersamamu adalah hadiah yang tak ternilai harganya."</p>
+                                <p>Hari ini kita merayakan cinta dan kebersamaan kita. Terima kasih telah menjadi bagian penting dalam hidupku.</p>
+                                <p>Mari kita buat kenangan indah bersama di hari spesial ini! <span class="heart">❤</span></p>
+                            `;
+                            break;
+                        case "image":
+                            newContent.innerHTML = `
+                                <h2>Galeri Kenangan Kita</h2>
+                                <div class="gallery">
+                                    <img src="image/1.jpg" alt="Kenangan 1">
+                                    <img src="image/2.jpg" alt="Kenangan 2">
+                                    <img src="image/3.jpg" alt="Kenangan 3">
+                                    <img src="image/4.jpg" alt="Kenangan 4">
+                                    <img src="image/5.jpg" alt="Kenangan 5">
+                                    <img src="image/6.jpg" alt="Kenangan 6">
+                                </div>
+                                <p class="quote">"Setiap foto menyimpan sejuta cerita tentang kita."</p>
+                                <p>Ini adalah beberapa momen indah yang kita habiskan bersama. Setiap gambar menyimpan sejuta cerita.</p>
+                                <p>Masih banyak kenangan yang kita lalui bersama. Terima kasih untuk setiap momen yang kamu berikan. <span class="heart">❤</span></p>
+                            `;
+                            break;
+                        case "tentang":
+                            newContent.innerHTML = `
+                                <h2>Tentang Hari Spesial Ini</h2>
+                                <p class="quote">"Cinta kita adalah perjalanan tanpa akhir."</p>
+                                <p>Anniversary adalah momen untuk merayakan perjalanan cinta kita. Setiap tahun yang berlalu membuat kita semakin dekat dan kuat.</p>
+                                <p>Terima kasih atas semua yang kamu lakukan untukku. Terima kasih banyak telah mau menerimaku sejauh ini.</p>
+                                <p>Maaf aku belum bisa memberi apa-apa untukmu, maaf sudah mengecewakanmu selama ini, maaf belum bisa menjadi yang terbaik untukmu.</p>
+                                <p>Aku senang bisa mengenalmu. Terima kasih sudah bertahan selama 365 hari dengan banyaknya cobaan yang tidak mudah. Ayo kita hadapi masalah yang ada bersama-sama.</p>
+                                <p>Sayang, ayo kita berjuang lagi. Kita buktikan kepada semua orang bahwa kita bisa. <span class="heart">❤</span></p>
+                                <p>Aku seneng disaat ada kamu semua hal terasa menjadi lebih ringan, mas punya tempat bercerita, mas ga bingung berkeluh kesah. Terimakasih buat semuanya</p>
+                                <p>Aku bingung harus nulis apalagi, intinya aku seneng saat bersama kamu, aku seneng bisa bareng kamu. I LOVE YOU SO MUCH NEVER.<span class="heart">❤</span></p>
+                                <p>Terima kasih atas cinta, dukungan, dan kesetiaan yang telah kita bagi bersama.</p>
+                            `;
+                            break;
+                    }
+
+                    content.appendChild(newContent);
+                    content.style.opacity = 1;
+                }, 300);
+            }
+
+            navLinks.forEach((link) => {
+                link.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    const page = e.target.getAttribute("data-page");
+                    loadContent(page);
+                });
+            });
+
+            loadContent("home");
+
+            // Floating hearts animation
+            function createHeart() {
+                const heart = document.createElement('div');
+                heart.innerHTML = '❤';
+                heart.classList.add('floating-heart');
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDuration = Math.random() * 3 + 2 + 's';
+                heart.style.opacity = Math.random();
+                heart.style.fontSize = Math.random() * 10 + 10 + 'px';
+                
+                document.body.appendChild(heart);
+
+                heart.style.animation = 'float-heart 4s linear';
+                
+                setTimeout(() => {
+                    heart.remove();
+                }, 4000);
+            }
+
+            setInterval(createHeart, 300);
+        });
+    </script>
+</body>
+</html>
